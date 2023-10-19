@@ -1,4 +1,5 @@
 import axios from 'axios';
+// import { controller } from 'components/App';
 
 const BASE_URL = 'https://pixabay.com/api/';
 
@@ -15,6 +16,6 @@ export const fetchCard = async (valueInput, page) => {
   });
 
   const resp = await axios.get(`${BASE_URL}?${params}`);
-
-  return resp;
+  console.log(resp.data);
+  return resp.data;
 };
