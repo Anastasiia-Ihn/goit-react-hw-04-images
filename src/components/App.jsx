@@ -26,7 +26,7 @@ export const App = () => {
       setLoader(true);
 
       try {
-        const cards = fetchCard(query, page);
+        const cards = await fetchCard(query, page);
         console.log(cards);
 
         if (!cards.data.hits.length) {
