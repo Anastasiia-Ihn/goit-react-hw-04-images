@@ -1,10 +1,8 @@
 import axios from 'axios';
-// import { controller } from 'components/App';
 
 const BASE_URL = 'https://pixabay.com/api/';
 
-//ств запиту на api
-export const fetchCard = async (valueInput, page) => {
+export const fetchCard = async (valueInput, page, controller) => {
   const params = new URLSearchParams({
     key: '39154877-9df82b17a56e0efc5c16aca53',
     q: valueInput,
@@ -15,7 +13,8 @@ export const fetchCard = async (valueInput, page) => {
     per_page: 12,
   });
 
-  const resp = await axios.get(`${BASE_URL}?${params}`);
-  console.log(resp.data);
+  const resp = await axios.get(`${BASE_URL}?${params}`, {
+    signal: controller.signal,
+  });
   return resp.data;
 };

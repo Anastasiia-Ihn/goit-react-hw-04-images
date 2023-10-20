@@ -14,9 +14,10 @@ export const App = () => {
   const [page, setPage] = useState(1);
   const [loader, setLoader] = useState(false);
   const [error, setError] = useState(false);
+  console.log(error);
 
   useEffect(() => {
-    // const controller = new AbortController();
+    const controller = new AbortController();
 
     if (query === '') {
       return;
@@ -26,22 +27,21 @@ export const App = () => {
       setLoader(true);
 
       try {
-        const cards = await fetchCard(query, page);
-        console.log(cards);
+        const cards = await fetchCard(query, page, controller);
 
-        if (!cards.data.hits.length) {
+        if (!cards.hits.length) {
           setError(true);
           toast.error('Sorry, not found');
         }
 
-        setGalleryItems(prev => [...prev, ...cards.data.hits]);
-      } catch (error) {
+        setGalleryItems(prev => [...prev, ...cards.hits]);
+      } catch (err) {
         setError(true);
         toast.error('Not found');
-        // if (error.code !== 'ERR_CANCELED') {
-        //   setError(true);
-        //   toast.error('Not found');
-        // }
+        if (err.code !== 'ERR_CANCELED') {
+          setError(true);
+          toast.error('Not found');
+        }
       } finally {
         setLoader(false);
       }
@@ -49,10 +49,10 @@ export const App = () => {
 
     fetchData();
 
-    // return () => {
-    //   controller.abort();
-    // };
-  }, [query, page, galleryItems]);
+    return () => {
+      controller.abort();
+    };
+  }, [query, page]);
 
   const handlerClickOnForm = evt => {
     if (evt.target[1].value === '') {
