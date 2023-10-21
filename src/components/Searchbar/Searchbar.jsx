@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { useState } from 'react';
 import {
   Header,
   SearchFormInput,
@@ -8,37 +8,33 @@ import {
 
 import { ImSearch } from 'react-icons/im';
 
-export class Searchbar extends Component {
-  state = { value: '' };
+export const Searchbar = props => {
+  const [value, setValue] = useState('');
+  const { onSubmit } = props;
 
-  handleChange = evt => {
-    this.setState({ value: evt.target.value });
+  const handleChange = evt => {
+    setValue(evt.target.value);
   };
 
-  render() {
-    const { onSubmit } = this.props;
-    const { value } = this.state;
-
-    return (
-      <Header>
-        <SearchForm
-          onSubmit={e => {
-            onSubmit(e);
-          }}
-        >
-          <SearchFormButton type="submit">
-            <ImSearch />
-          </SearchFormButton>
-          <SearchFormInput
-            type="text"
-            // autocomplete="off"
-            // autofocus
-            placeholder="Search images and photos"
-            value={value}
-            onChange={this.handleChange}
-          />
-        </SearchForm>
-      </Header>
-    );
-  }
-}
+  return (
+    <Header>
+      <SearchForm
+        onSubmit={e => {
+          onSubmit(e);
+        }}
+      >
+        <SearchFormButton type="submit">
+          <ImSearch />
+        </SearchFormButton>
+        <SearchFormInput
+          type="text"
+          // autocomplete="off"
+          // autofocus
+          placeholder="Search images and photos"
+          value={value}
+          onChange={handleChange}
+        />
+      </SearchForm>
+    </Header>
+  );
+};

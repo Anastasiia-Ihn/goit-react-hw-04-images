@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export const BtnLoadMore = styled.button`
   padding: 8px 16px;
   margin-bottom: 50px;
+  margin-left: 50px;
   border-radius: 2px;
   background-color: ${p => p.theme.colors.blue};
   transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
